@@ -13,7 +13,7 @@ A flexible background task management plugin for OpenCode.
 ## Installation
 
 ```bash
-bun add @opencode/background-tasks
+bun add @zenobius/opencode-background
 ```
 
 ## Usage
