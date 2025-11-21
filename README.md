@@ -42,8 +42,9 @@ Walk me through each step so I can see how the plugin handles concurrent process
 ### Example 2: Web Server and Concurrent Testing
 
 ```
-Let's test running a web server in the background (use fake json api server):
-- Run the server
+Let's test running a web server in the background using json-server:
+- Start a json-server instance with: bunx json-server --watch db.json
+- Tag it as ["server", "json-api"] for easy management
 - Test that it's still running
 - Execute a sync cmd (without background) to curl results from the server
 - Test that it's still running
