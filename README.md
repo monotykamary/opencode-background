@@ -2,9 +2,7 @@
 
 A flexible background process management plugin for OpenCode, offering robust process tracking and lifecycle management.
 
-
-https://github.com/user-attachments/assets/9bb94244-2a1d-49c0-87b5-0cd752309c52
-
+[![asciicast](https://asciinema.org/a/FhwMJK48sUyKzoBe366YuhqS7.svg)](https://asciinema.org/a/FhwMJK48sUyKzoBe366YuhqS7)
 
 ## Installation
 
