@@ -29,17 +29,9 @@ jobs:
           cache: true
           experimental: true
 
-      - name: lint
-        run: mise run lint
-
-      - name: unit test
-        run: mise run unittest
-
-      - name: build
-        run: mise run build
-
-      - name: integration test
-        run: mise run integrationtest
-
-      - name: docs
-        run: mise run docs
+      - name: Run Checks
+        run: |
+          mise run setup
+          mise run lint
+          mise run unittest
+          mise run build

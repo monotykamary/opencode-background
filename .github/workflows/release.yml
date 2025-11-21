@@ -3,10 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - master
-
-env:
-  HUSKY: 0 # https://typicode.github.io/husky/how-to.html#ci-server-and-docker
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -31,11 +28,10 @@ jobs:
           token: ${{secrets.RELEASE_PLEASE_TOKEN}}
       - name: Print Release Data
         run: |
-          echo 'Release Data:'
-
-          echo '''
+          echo """
+          Release Data:
             ${{ toJSON(steps.release-please.outputs) }}
-          '''
+          """
 
   Deploy:
     needs: Process
@@ -52,7 +48,9 @@ jobs:
           experimental: true
 
       - name: Preflight
-        run: mise run build
+        run: |
+          mise run setup
+          mise run build
 
       - if: ${{ needs.Process.outputs.releases_created == 'true' }}
         run: mise run publish --tag latest
