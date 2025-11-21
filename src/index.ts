@@ -1,10 +1,10 @@
 import { Plugin, tool } from '@opencode-ai/plugin';
-import { BackgroundTaskManager } from './BackgroundTaskManager';
+import { BackgroundProcessManager } from './BackgroundProcessManager';
 
-const backgroundTaskManager = new BackgroundTaskManager();
+const backgroundTaskManager = new BackgroundProcessManager();
 
-export const BackgroundTasksPlugin: Plugin = async () => {
-  const createBackgroundTask = tool({
+export const BackgroundProcesssPlugin: Plugin = async () => {
+  const createBackgroundProcess = tool({
     description:
       'Run a command as a background task with real-time output tracking, session tracking, optional tags, and global flag',
     args: {
@@ -24,7 +24,7 @@ export const BackgroundTasksPlugin: Plugin = async () => {
     },
   });
 
-  const getBackgroundTask = tool({
+  const getBackgroundProcess = tool({
     description: 'Retrieve details and output of a specific background task',
     args: {
       taskId: tool.schema.string(),
@@ -34,7 +34,7 @@ export const BackgroundTasksPlugin: Plugin = async () => {
     },
   });
 
-  const listBackgroundTasks = tool({
+  const listBackgroundProcesss = tool({
     description: 'List background tasks with advanced filtering options',
     args: {
       sessionId: tool.schema.string().optional(),
@@ -70,9 +70,9 @@ export const BackgroundTasksPlugin: Plugin = async () => {
 
   return {
     tool: {
-      createBackgroundTask,
-      getBackgroundTask,
-      listBackgroundTasks,
+      createBackgroundProcess,
+      getBackgroundProcess,
+      listBackgroundProcesss,
       killTasks,
     },
 

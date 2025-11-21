@@ -1,4 +1,4 @@
-export class BackgroundTask {
+export class BackgroundProcess {
   id: string;
   name: string;
   status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
@@ -12,7 +12,7 @@ export class BackgroundTask {
   pid?: number;
   global?: boolean;
 
-  constructor(init: Partial<BackgroundTask>) {
+  constructor(init: Partial<BackgroundProcess>) {
     this.id = init.id || 'task-' + Math.random().toString(36).substring(2, 9);
     this.name = init.name || '';
     this.status = init.status || 'pending';

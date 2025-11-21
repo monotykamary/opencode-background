@@ -1,8 +1,8 @@
 import { execa } from 'execa';
-import { BackgroundTask } from './BackgroundTask';
+import { BackgroundProcess } from './BackgroundProcess';
 
-export class BackgroundTaskManager {
-  private tasks: Map<string, BackgroundTask> = new Map();
+export class BackgroundProcessManager {
+  private tasks: Map<string, BackgroundProcess> = new Map();
 
   createTask(input: {
     command: string;
@@ -17,7 +17,7 @@ export class BackgroundTaskManager {
       stderr: 'pipe',
     });
 
-    const task = new BackgroundTask({
+    const task = new BackgroundProcess({
       command: input.command,
       name: input.name || input.command,
       tags: input.tags,
@@ -111,7 +111,7 @@ export class BackgroundTaskManager {
   }): string {
     const killedTasks: string[] = [];
 
-    const handleTaskKill = (task: BackgroundTask) => {
+    const handleTaskKill = (task: BackgroundProcess) => {
       try {
         if (task.pid) {
           process.kill(task.pid);

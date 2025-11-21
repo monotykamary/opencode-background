@@ -1,16 +1,16 @@
 import { describe, it, expect } from 'vitest';
-import { BackgroundTask } from './BackgroundTask';
+import { BackgroundProcess } from './BackgroundProcess';
 
-describe('BackgroundTask', () => {
+describe('BackgroundProcess', () => {
   describe('constructor', () => {
     it('should generate a unique id if not provided', () => {
-      const task1 = new BackgroundTask({});
-      const task2 = new BackgroundTask({});
+      const task1 = new BackgroundProcess({});
+      const task2 = new BackgroundProcess({});
       expect(task1.id).not.toBe(task2.id);
     });
 
     it('should set default values when no init params are provided', () => {
-      const task = new BackgroundTask({});
+      const task = new BackgroundProcess({});
       expect(task.name).toBe('');
       expect(task.status).toBe('pending');
       expect(task.command).toBe('');
@@ -29,7 +29,7 @@ describe('BackgroundTask', () => {
         tags: ['test'],
         global: true,
       };
-      const task = new BackgroundTask(initParams);
+      const task = new BackgroundProcess(initParams);
       expect(task.name).toBe('Test Task');
       expect(task.status).toBe('running');
       expect(task.command).toBe('ls -l');
@@ -41,13 +41,13 @@ describe('BackgroundTask', () => {
 
   describe('recordOutput', () => {
     it('should add line to outputStream', () => {
-      const task = new BackgroundTask({});
+      const task = new BackgroundProcess({});
       task.recordOutput('Test output');
       expect(task.outputStream).toContain('Test output');
     });
 
     it('should add error line with [ERROR] prefix', () => {
-      const task = new BackgroundTask({});
+      const task = new BackgroundProcess({});
       task.recordOutput('Test error', true);
       expect(task.outputStream).toContain('[ERROR] Test error');
     });
@@ -55,7 +55,7 @@ describe('BackgroundTask', () => {
 
   describe('markCompleted', () => {
     it('should set status to completed and record completedAt', () => {
-      const task = new BackgroundTask({});
+      const task = new BackgroundProcess({});
       const beforeTime = new Date();
       task.markCompleted();
       expect(task.status).toBe('completed');
@@ -66,7 +66,7 @@ describe('BackgroundTask', () => {
 
   describe('markFailed', () => {
     it('should set status to failed and record error', () => {
-      const task = new BackgroundTask({});
+      const task = new BackgroundProcess({});
       const error = new Error('Test error');
       task.markFailed(error);
       expect(task.status).toBe('failed');
@@ -75,7 +75,7 @@ describe('BackgroundTask', () => {
     });
 
     it('should handle non-Error objects', () => {
-      const task = new BackgroundTask({});
+      const task = new BackgroundProcess({});
       const error = 'Simple error string';
       task.markFailed(error);
       expect(task.status).toBe('failed');
@@ -86,7 +86,7 @@ describe('BackgroundTask', () => {
 
   describe('cancel', () => {
     it('should set status to cancelled and record output', () => {
-      const task = new BackgroundTask({});
+      const task = new BackgroundProcess({});
       task.cancel();
       expect(task.status).toBe('cancelled');
       expect(task.outputStream).toContain('Task forcibly terminated');

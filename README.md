@@ -1,6 +1,6 @@
-# OpenCode Background Tasks Plugin
+# OpenCode Background Processes Plugin
 
-A flexible background task management plugin for OpenCode.
+A flexible background process management plugin for OpenCode, offering robust process tracking and lifecycle management.
 
 ## Installation
 
@@ -14,90 +14,93 @@ Create or edit your OpenCode configuration file (typically `~/.config/opencode/c
 
 ## Features
 
-- 🚀 Create background tasks with real-time output tracking
-- 🏷️ Tag and categorize tasks
-- 🔍 Advanced task filtering
-- 🔪 Selective task termination
-- 🌐 Global and session-specific task support
+- 🚀 Create background processes with real-time output tracking
+- 🏷️ Tag and categorize processes
+- 🔍 Advanced process filtering
+- 🔪 Selective process termination
+- 🌐 Global and session-specific process support
 - :recycle: Automatic cleanup on session end and application close
 
 ## Usage in OpenCode
 
-### Creating a Background Task
+### Creating a Background Process
 
 ```
-⚙ createBackgroundTask
-  command=/tmp/long-task.sh
-  name="Long Running Task"
-  tags=["long-task", "processing"]
+⚙ createBackgroundProcess
+  command=/tmp/long-process.sh
+  name="Long Running Process"
+  tags=["long-process", "processing"]
   global=false  # Optional: default is false
 ```
 
-### Task Types
+### Process Types
 
-- **Session-Specific Tasks** (default):
+- **Session-Specific Processes** (default):
   - Automatically terminated when the session ends
   - Useful for temporary, session-bound operations
+  - Tracked in-memory for the current session
 
-- **Global Tasks**:
+- **Global Processes**:
   - Persist across sessions
   - Continues running until explicitly stopped
-  - Useful for long-running services or background processes
+  - Useful for long-running services or background operations
 
-### Listing Tasks
+### Listing Processes
 
 ```
-# List tasks in current session
-⚙ listBackgroundTasks
+# List processes in current session
+⚙ listBackgroundProcesses
   sessionId=current_session_id
 
-# List tasks with specific tags
-⚙ listBackgroundTasks
+# List processes with specific tags
+⚙ listBackgroundProcesses
   tags=["processing"]
 ```
 
-### Killing Tasks
+### Killing Processes
 
 ```
-# Kill a specific task
-⚙ killTasks
-  taskId=specific-task-id
+# Kill a specific process
+⚙ killProcesses
+  processId=specific-process-id
 
-# Kill all tasks in a session
-⚙ killTasks
+# Kill all processes in a session
+⚙ killProcesses
   sessionId=current_session_id
 ```
 
 ## Plugin Methods
 
-### `createBackgroundTask`
+### `createBackgroundProcess`
 
 - `command`: Shell command to execute
-- `name` (optional): Descriptive name for the task
-- `tags` (optional): List of tags to categorize the task
+- `name` (optional): Descriptive name for the process
+- `tags` (optional): List of tags to categorize the process
 - `global` (optional):
-  - `false` (default): Session-specific task
-  - `true`: Task persists across sessions
+  - `false` (default): Session-specific process
+  - `true`: Process persists across sessions
 
-### `listBackgroundTasks`
+### `listBackgroundProcesses`
 
-- `sessionId` (optional): Filter tasks by session
-- `status` (optional): Filter tasks by status
-- `tags` (optional): Filter tasks by tags
+- `sessionId` (optional): Filter processes by session
+- `status` (optional): Filter processes by status
+- `tags` (optional): Filter processes by tags
 
-### `killTasks`
+### `killProcesses`
 
-- `taskId` (optional): Kill a specific task
-- `sessionId` (optional): Kill tasks in a specific session
-- `status` (optional): Kill tasks with a specific status
-- `tags` (optional): Kill tasks with specific tags
+- `processId` (optional): Kill a specific process
+- `sessionId` (optional): Kill processes in a specific session
+- `status` (optional): Kill processes with a specific status
+- `tags` (optional): Kill processes with specific tags
 
 ## Considerations
 
-- Tasks are tracked in-memory
-- Output is captured for the last 100 lines
-- Tasks can be in states: `pending`, `running`, `completed`, `failed`, `cancelled`
-- ALL tasks are killed when OpenCode closes
+- Processes are tracked in-memory using a singleton `BackgroundProcessManager`
+- Output stream captures up to the last 100 lines of process output
+- Processes can be in states: `pending`, `running`, `completed`, `failed`, `cancelled`
+- Processes include detailed metadata: start/completion times, error tracking
+- ALL processes are killed when OpenCode closes
+- Processes generate unique IDs automatically if not specified
 
 ## Contributing
 

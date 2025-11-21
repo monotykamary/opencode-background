@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { BackgroundTaskManager } from './BackgroundTaskManager';
+import { BackgroundProcessManager } from './BackgroundProcessManager';
 import { execa } from 'execa';
 import { EventEmitter } from 'events';
 
@@ -59,11 +59,11 @@ vi.mock('process', () => ({
   kill: vi.fn(() => true),
 }));
 
-describe('BackgroundTaskManager', () => {
-  let taskManager: BackgroundTaskManager;
+describe('BackgroundProcessManager', () => {
+  let taskManager: BackgroundProcessManager;
 
   beforeEach(() => {
-    taskManager = new BackgroundTaskManager();
+    taskManager = new BackgroundProcessManager();
   });
 
   describe('Task Creation', () => {
