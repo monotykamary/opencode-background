@@ -4,23 +4,11 @@ A flexible background task management plugin for OpenCode.
 
 ## Installation
 
-1. Install the plugin:
-```bash
-bun add @zenobius/opencode-background
-```
-
-2. Add to OpenCode Configuration
-
 Create or edit your OpenCode configuration file (typically `~/.config/opencode/config.json`):
 
 ```json
 {
-  "plugins": [
-    {
-      "name": "@zenobius/opencode-background",
-      "enabled": true
-    }
-  ]
+  "plugins": ["@zenobius/opencode-background"]
 }
 ```
 
@@ -31,15 +19,16 @@ Create or edit your OpenCode configuration file (typically `~/.config/opencode/c
 - 🔍 Advanced task filtering
 - 🔪 Selective task termination
 - 🌐 Global and session-specific task support
+- :recycle: Automatic cleanup on session end and application close
 
 ## Usage in OpenCode
 
 ### Creating a Background Task
 
 ```
-⚙ createBackgroundTask 
-  command=/tmp/long-task.sh 
-  name="Long Running Task" 
+⚙ createBackgroundTask
+  command=/tmp/long-task.sh
+  name="Long Running Task"
   tags=["long-task", "processing"]
   global=false  # Optional: default is false
 ```
@@ -59,11 +48,11 @@ Create or edit your OpenCode configuration file (typically `~/.config/opencode/c
 
 ```
 # List tasks in current session
-⚙ listBackgroundTasks 
+⚙ listBackgroundTasks
   sessionId=current_session_id
 
 # List tasks with specific tags
-⚙ listBackgroundTasks 
+⚙ listBackgroundTasks
   tags=["processing"]
 ```
 
@@ -71,30 +60,33 @@ Create or edit your OpenCode configuration file (typically `~/.config/opencode/c
 
 ```
 # Kill a specific task
-⚙ killTasks 
+⚙ killTasks
   taskId=specific-task-id
 
 # Kill all tasks in a session
-⚙ killTasks 
+⚙ killTasks
   sessionId=current_session_id
 ```
 
 ## Plugin Methods
 
 ### `createBackgroundTask`
+
 - `command`: Shell command to execute
 - `name` (optional): Descriptive name for the task
 - `tags` (optional): List of tags to categorize the task
-- `global` (optional): 
+- `global` (optional):
   - `false` (default): Session-specific task
   - `true`: Task persists across sessions
 
 ### `listBackgroundTasks`
+
 - `sessionId` (optional): Filter tasks by session
 - `status` (optional): Filter tasks by status
 - `tags` (optional): Filter tasks by tags
 
 ### `killTasks`
+
 - `taskId` (optional): Kill a specific task
 - `sessionId` (optional): Kill tasks in a specific session
 - `status` (optional): Kill tasks with a specific status
@@ -102,7 +94,7 @@ Create or edit your OpenCode configuration file (typically `~/.config/opencode/c
 
 ## Considerations
 
-- Tasks are tracked in-memory 
+- Tasks are tracked in-memory
 - Output is captured for the last 100 lines
 - Tasks can be in states: `pending`, `running`, `completed`, `failed`, `cancelled`
 - ALL tasks are killed when OpenCode closes
@@ -113,4 +105,4 @@ Contributions are welcome! Please file issues or submit pull requests on the Git
 
 ## License
 
-[To be determined]
+MIT License. See the [LICENSE](LICENSE) file for details.

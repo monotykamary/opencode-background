@@ -7,8 +7,16 @@
   "types": "src/index.ts",
   "scripts": {
     "build": "bun build ./src/index.ts --outdir dist --target bun",
-    "test": "bun test"
+    "test": "bun test",
+    "prepare": "bun run build",
+    "publish": "npm publish --access public"
   },
+  "files": [
+    "dist",
+    "src/version.ts"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@opencode-ai/plugin": "1.0.83",
     "execa": "^9.6.0"
