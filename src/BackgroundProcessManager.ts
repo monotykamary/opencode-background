@@ -1,8 +1,14 @@
 import { execa } from 'execa';
 import { BackgroundProcess } from './BackgroundProcess';
+import { sendIgnoredMessage } from './notifications';
 
 export class BackgroundProcessManager {
   private tasks: Map<string, BackgroundProcess> = new Map();
+  private client: any;
+
+  constructor(client: any) {
+    this.client = client;
+  }
 
   createTask(input: {
     command: string;
@@ -43,9 +49,11 @@ export class BackgroundProcessManager {
     subprocess
       .then(() => {
         task.markCompleted();
+        this.notifyTaskCompleted(task);
       })
       .catch((error: unknown) => {
         task.markFailed(error);
+        this.notifyTaskFailed(task);
       });
 
     return task.id;
@@ -176,5 +184,17 @@ export class BackgroundProcessManager {
       }
     }
     this.tasks.clear();
+  }
+
+  private notifyTaskCompleted(task: BackgroundProcess): void {
+    const message = `[Background Task Completed]\nTask: ${task.name || task.command}\nID: ${task.id}`;
+    sendIgnoredMessage(this.client, task.sessionId, message);
+  }
+
+  private notifyTaskFailed(task: BackgroundProcess): void {
+    const errorOutput = task.error || 'Unknown error';
+    const lastOutputLines = task.outputStream.slice(-3).join('\n');
+    const message = `[Background Task Failed]\nTask: ${task.name || task.command}\nID: ${task.id}\nError: ${errorOutput}\nLast output:\n${lastOutputLines}`;
+    sendIgnoredMessage(this.client, task.sessionId, message);
   }
 }

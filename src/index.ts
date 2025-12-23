@@ -1,9 +1,10 @@
 import { Plugin, tool } from '@opencode-ai/plugin';
 import { BackgroundProcessManager } from './BackgroundProcessManager';
 
-const backgroundTaskManager = new BackgroundProcessManager();
+let backgroundTaskManager: BackgroundProcessManager;
 
-export const BackgroundProcesssPlugin: Plugin = async () => {
+export const BackgroundProcesssPlugin: Plugin = async (ctx) => {
+  backgroundTaskManager = new BackgroundProcessManager(ctx.client);
   const createBackgroundProcess = tool({
     description:
       'Run a command as a background task with real-time output tracking, session tracking, optional tags, and global flag',
